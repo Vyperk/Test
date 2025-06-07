@@ -8,9 +8,9 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: #111;
+      background: #0c0c0c;
       color: white;
-      font-family: sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       height: 100vh;
       overflow: hidden;
     }
@@ -18,65 +18,79 @@
       display: flex;
     }
     #menu-lateral {
-      width: 250px;
+      width: 260px;
       border-right: 2px solid red;
-      padding: 10px;
+      padding: 20px 10px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       overflow-y: auto;
-      height: 100vh;
+      background-color: #1a1a1a;
     }
     .boton-pregunta, .panel-admin-btn {
-      background: #222;
+      background: #111;
       border: 2px solid red;
       color: white;
-      padding: 12px;
-      border-radius: 10px;
+      padding: 14px 10px;
+      border-radius: 12px;
       text-align: center;
       cursor: pointer;
-      font-size: 1.1em;
+      font-size: 1rem;
+      transition: all 0.2s ease-in-out;
     }
     .boton-pregunta:hover, .panel-admin-btn:hover {
       background: red;
+      color: white;
     }
     #contenido-panel {
       flex: 1;
-      padding: 20px;
+      padding: 40px 20px;
       overflow-y: auto;
     }
     h1 {
       text-align: center;
       color: red;
+      margin-bottom: 30px;
+      font-size: 2em;
     }
     .contenido {
       display: none;
-      margin-top: 10px;
     }
     .bloque {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 20px;
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 16px;
+      border: 2px solid #ff0000;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
     }
     .bloque input {
-      font-size: 1em;
-      padding: 12px;
+      font-size: 1.1em;
+      padding: 14px;
       border-radius: 30px;
       border: none;
-      width: 80%;
+      width: 90%;
       max-width: 600px;
       text-align: center;
       background: black;
       color: white;
       border: 2px solid red;
+      transition: 0.2s;
+    }
+    .bloque input:focus {
+      outline: none;
+      border-color: #ff4d4d;
+      background-color: #1f1f1f;
     }
     .grid-opciones {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 15px;
       width: 100%;
-      max-width: 600px;
+      max-width: 620px;
     }
   </style>
 </head>
