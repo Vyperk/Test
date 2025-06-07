@@ -76,7 +76,7 @@
     .botones-control button:hover {
       background: darkred;
     }
-    .opcion {
+    .opcion, .campo-pregunta {
       display: none;
     }
     #panel-admin {
@@ -159,7 +159,7 @@
       bloque.innerHTML = `
         <div class="bloque">
           <h2 style="text-align:center; color:#f44;">Panel de Pregunta ${p.numero}</h2>
-          <input type="text" id="${p.id}" placeholder="Escribe la pregunta...">
+          <div class="campo-pregunta"><input type="text" id="${p.id}" placeholder="Escribe la pregunta..."></div>
           <div class="opcion"><input type="text" id="${p.id}a" placeholder="Opción A"></div>
           <div class="opcion"><input type="text" id="${p.id}b" placeholder="Opción B"></div>
           <div class="opcion"><input type="text" id="${p.id}c" placeholder="Opción C"></div>
@@ -171,6 +171,7 @@
             <option value="D">Respuesta Correcta: D</option>
           </select>
           <div class="botones-control">
+            <button onclick="mostrarCampo('${p.id}')">Mostrar Pregunta</button>
             <button onclick="mostrarOpcion('${p.id}', 'a')">Mostrar A</button>
             <button onclick="mostrarOpcion('${p.id}', 'b')">Mostrar B</button>
             <button onclick="mostrarOpcion('${p.id}', 'c')">Mostrar C</button>
@@ -194,6 +195,10 @@
     function mostrarPanelAdmin() {
       document.querySelectorAll('.contenido').forEach(el => el.style.display = 'none');
       document.getElementById('panel-admin').style.display = 'block';
+    }
+
+    function mostrarCampo(id) {
+      document.querySelector(`#contenido-${id} .campo-pregunta`).style.display = 'block';
     }
 
     function mostrarOpcion(id, letra) {
@@ -245,4 +250,5 @@
   </script>
 </body>
 </html>
+
 
