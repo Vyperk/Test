@@ -112,6 +112,9 @@
       localStorage.setItem("pregunta", pregunta);
       localStorage.setItem("opciones", JSON.stringify(opciones));
 
+      const numero = parseInt(id.replace('q', ''));
+      localStorage.setItem("numeroPregunta", numero);
+
       alert(`📢 Pregunta lanzada: ${pregunta}`);
     }
   </script>
