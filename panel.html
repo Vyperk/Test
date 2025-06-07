@@ -68,34 +68,12 @@
     .opcion {
       display: none;
     }
-    .navegacion-global {
-      margin-bottom: 20px;
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-    .navegacion-global button {
-      background: red;
-      border: none;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .navegacion-global button:hover {
-      background: darkred;
-    }
   </style>
 </head>
 <body>
   <div id="menu-lateral"></div>
   <div id="contenido-panel">
     <h1>🎮 Panel de Control - Viperreto</h1>
-    <div class="navegacion-global">
-      <button onclick="retrocederPregunta()">⬅️ Retroceder</button>
-      <button onclick="avanzarPregunta()">➡️ Siguiente</button>
-      <button onclick="reiniciarProgreso()">🔄 Reiniciar</button>
-    </div>
     <div id="panel"></div>
   </div>
 
@@ -107,8 +85,6 @@
       opciones: ['', '', '', ''],
       correcta: 'A',
     }));
-
-    let preguntaActual = 0;
 
     const panel = document.getElementById('panel');
     const menu = document.getElementById('menu-lateral');
@@ -125,6 +101,7 @@
       bloque.id = `contenido-${p.id}`;
       bloque.innerHTML = `
         <div class="bloque">
+          <h2 style="text-align:center; color:#f44;">Panel de Pregunta ${p.numero}</h2>
           <input type="text" id="${p.id}" placeholder="Escribe la pregunta...">
           <div class="opcion"><input type="text" id="${p.id}a" placeholder="Opción A"></div>
           <div class="opcion"><input type="text" id="${p.id}b" placeholder="Opción B"></div>
@@ -181,27 +158,6 @@
       localStorage.setItem("respuestaJugador", jugador.toUpperCase());
     }
 
-    function avanzarPregunta() {
-      if (preguntaActual < 13) {
-        preguntaActual++;
-        mostrarContenido('q' + (preguntaActual + 1));
-      }
-    }
-
-    function retrocederPregunta() {
-      if (preguntaActual > 0) {
-        preguntaActual--;
-        mostrarContenido('q' + (preguntaActual + 1));
-      }
-    }
-
-    function reiniciarProgreso() {
-      localStorage.clear();
-      preguntaActual = 0;
-      mostrarContenido('q1');
-    }
-
-    // Mostrar la primera pregunta por defecto
     mostrarContenido('q1');
   </script>
 </body>
