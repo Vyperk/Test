@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,31 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Panel de Control - Viperreto</title>
   <style>
-    body {
-      background: #111;
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px;
-    }
-    input, button {
-      margin: 8px;
-      padding: 10px;
-      font-size: 1em;
-      border: none;
-      border-radius: 6px;
-    }
-    input {
-      width: 90%;
-      max-width: 600px;
-    }
-    button {
-      background: red;
-      color: white;
-      cursor: pointer;
-    }
+    body {background: #111; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 30px;}
+    input, button {margin: 8px; padding: 10px; font-size: 1em; border: none; border-radius: 6px;}
+    input {width: 90%; max-width: 600px;}
+    button {background: red; color: white; cursor: pointer;}
   </style>
 </head>
 <body>
@@ -41,7 +19,6 @@
   <input type="text" id="optC" placeholder="Opción C" />
   <input type="text" id="optD" placeholder="Opción D" />
   <button onclick="enviar()">📡 Enviar Pregunta</button>
-
   <script>
     function enviar() {
       const pregunta = document.getElementById('pregunta').value;
@@ -51,10 +28,8 @@
         document.getElementById('optC').value,
         document.getElementById('optD').value
       ];
-
       localStorage.setItem("pregunta", pregunta);
       localStorage.setItem("opciones", JSON.stringify(opciones));
-
       alert("📢 Pregunta enviada a pantalla del stream");
     }
   </script>
