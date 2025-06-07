@@ -59,7 +59,7 @@
       align-items: center;
       gap: 10px;
     }
-    .bloque input, .bloque select, .bloque button {
+    .bloque input {
       font-size: 1em;
       padding: 12px;
       border-radius: 30px;
@@ -67,55 +67,16 @@
       width: 80%;
       max-width: 600px;
       text-align: center;
-    }
-    .bloque select {
       background: black;
       color: white;
       border: 2px solid red;
     }
-    .bloque input {
-      background: black;
-      color: white;
-      border: 2px solid red;
-    }
-    .bloque .grid-opciones {
+    .grid-opciones {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       width: 100%;
       max-width: 600px;
-    }
-    .bloque .control-respuesta {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      width: 100%;
-      max-width: 600px;
-    }
-    .bloque .control-respuesta button,
-    .bloque button.enviar {
-      background: black;
-      color: white;
-      border: 2px solid red;
-      border-radius: 30px;
-      padding: 12px;
-      font-size: 1em;
-      cursor: pointer;
-    }
-    .bloque .control-respuesta button:hover,
-    .bloque button.enviar:hover {
-      background: red;
-    }
-    #panel-admin {
-      display: none;
-      background: #222;
-      border: 2px solid red;
-      border-radius: 8px;
-      padding: 15px;
-    }
-    #panel-admin h2 {
-      margin-top: 0;
-      color: #f44;
     }
   </style>
 </head>
@@ -125,11 +86,6 @@
   </div>
   <div id="contenido-panel">
     <h1>🎮 Panel de Control - Viperreto</h1>
-
-    <div id="panel-admin">
-      <h2>🎛️ Panel de Administración</h2>
-    </div>
-
     <div id="panel"></div>
   </div>
 
@@ -161,26 +117,11 @@
             <input type="text" id="${p.id}c" placeholder="Opción C">
             <input type="text" id="${p.id}d" placeholder="Opción D">
           </div>
-          <select id="${p.id}correcta">
-            <option value="A">Opción Correcta: A</option>
-            <option value="B">Opción Correcta: B</option>
-            <option value="C">Opción Correcta: C</option>
-            <option value="D">Opción Correcta: D</option>
-          </select>
-          <div class="control-respuesta">
-            <button onclick="accionRespuesta('${p.id}', 'a')">A Mostrar/Ocultar/Seleccionar</button>
-            <button onclick="accionRespuesta('${p.id}', 'b')">B Mostrar/Ocultar/Seleccionar</button>
-            <button onclick="accionRespuesta('${p.id}', 'c')">C Mostrar/Ocultar/Seleccionar</button>
-            <button onclick="accionRespuesta('${p.id}', 'd')">D Mostrar/Ocultar/Seleccionar</button>
-          </div>
-          <button class="enviar" onclick="enviarPregunta('${p.id}')">📡 Lanzar Pregunta</button>
-          <button class="enviar" onclick="revelarResultado('${p.id}')">✅ Lanzar Respuesta</button>
         </div>`;
       panel.appendChild(bloque);
     });
 
     function mostrarContenido(id) {
-      document.getElementById('panel-admin').style.display = 'none';
       document.querySelectorAll('.contenido').forEach(el => el.style.display = 'none');
       const mostrar = document.getElementById(`contenido-${id}`);
       if (mostrar) mostrar.style.display = 'flex';
@@ -188,40 +129,10 @@
 
     function mostrarPanelAdmin() {
       document.querySelectorAll('.contenido').forEach(el => el.style.display = 'none');
-      document.getElementById('panel-admin').style.display = 'block';
-    }
-
-    function accionRespuesta(id, letra) {
-      let mostrar = localStorage.getItem(`mostrar_${letra}`);
-      if (mostrar === 'true') {
-        localStorage.setItem(`mostrar_${letra}`, 'false');
-      } else {
-        localStorage.setItem(`mostrar_${letra}`, 'true');
-      }
-      document.getElementById(id + 'correcta').value = letra.toUpperCase();
-    }
-
-    function enviarPregunta(id) {
-      const pregunta = document.getElementById(id).value;
-      const opciones = ['a', 'b', 'c', 'd'].map(l => document.getElementById(id + l).value);
-      const correcta = document.getElementById(id + 'correcta').value;
-
-      localStorage.setItem("pregunta", pregunta);
-      localStorage.setItem("opciones", JSON.stringify(opciones));
-      localStorage.setItem("respuestaCorrecta", correcta);
-      localStorage.setItem("numeroPregunta", parseInt(id.replace('q', '')));
-      localStorage.removeItem("respuestaJugador");
-    }
-
-    function revelarResultado(id) {
-      const jugador = prompt("¿Qué opción seleccionó el jugador? (A/B/C/D)", "");
-      if (!jugador) return;
-      localStorage.setItem("respuestaJugador", jugador.toUpperCase());
     }
 
     mostrarContenido('q1');
   </script>
 </body>
 </html>
-
 
