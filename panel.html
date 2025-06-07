@@ -3,148 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Viperreto - Juego</title>
+  <title>Panel Viperreto Avanzado</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100vh;
-      background: transparent;
-      font-family: 'Segoe UI', sans-serif;
+      background: #111;
       color: white;
+      font-family: sans-serif;
+      height: 100vh;
       overflow: hidden;
     }
-    .container {
-      position: relative;
-      width: 100%;
-      height: 100%;
+    body {
+      display: flex;
+    }
+    #menu-lateral {
+      width: 250px;
+      border-right: 2px solid red;
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      gap: 10px;
+      overflow-y: auto;
+      height: 100vh;
     }
-    .question-box {
-      background: rgba(20, 20, 20, 0.85);
+    .boton-pregunta, .panel-admin-btn {
+      background: #222;
       border: 2px solid red;
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      max-width: 900px;
-      width: 90%;
-      box-shadow: 0 0 20px red;
-    }
-    h1 {
-      color: red;
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-    .question {
-      font-size: 1.5em;
-      margin: 15px 0;
-    }
-    .options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .option {
-      background: #111;
-      border: 2px solid white;
-      border-radius: 8px;
-      padding: 15px;
-      text-align: center;
-      transition: 0.3s;
-      font-size: 1.2em;
-      display: none;
-    }
-    .option.correct {
-      background-color: green;
-    }
-    .option.incorrect {
-      background-color: darkred;
-    }
-    .progress {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
       color: white;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
       font-size: 1.1em;
     }
-    .controls {
+    .boton-pregunta:hover, .panel-admin-btn:hover {
+      background: red;
+    }
+    #contenido-panel {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    h1 {
+      text-align: center;
+      color: red;
+    }
+    .contenido {
+      display: none;
       margin-top: 10px;
     }
-    .controls button {
-      margin: 0 5px;
-      padding: 5px 10px;
+    .bloque input, .bloque select, .bloque button {
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 6px;
+      font-size: 0.9em;
+    }
+    .botones-control {
+      display: flex;
+      gap: 5px;
+    }
+    .botones-control button {
+      flex: 1;
+      padding: 5px;
+      font-size: 0.85em;
+      cursor: pointer;
       background: red;
-      border: none;
       color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .botones-control button:hover {
+      background: darkred;
+    }
+    .opcion {
+      display: none;
+    }
+    #panel-admin {
+      display: none;
+      background: #222;
+      border: 2px solid red;
+      border-radius: 8px;
+      padding: 15px;
+    }
+    #panel-admin h2 {
+      margin-top: 0;
+      color: #f44;
+    }
+    #panel-admin label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    #panel-admin input[type="checkbox"] {
+      margin-right: 8px;
+    }
+    #panel-admin button {
+      margin-top: 10px;
+      padding: 6px 12px;
+      background: red;
+      color: white;
+      border: none;
       border-radius: 5px;
       cursor: pointer;
     }
-    .controls button:hover {
+    #panel-admin button:hover {
       background: darkred;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="progress" id="progreso">Pregunta 1 de 14</div>
-    <div class="question-box">
-      <h1>EL VIPERRETO</h1>
-      <div class="question" id="pregunta">Cargando pregunta...</div>
-      <div class="controls">
-        <button onclick="mostrarPregunta()">Mostrar Pregunta</button>
-        <button onclick="mostrarRespuesta('A')">Mostrar A</button>
-        <button onclick="mostrarRespuesta('B')">Mostrar B</button>
-        <button onclick="mostrarRespuesta('C')">Mostrar C</button>
-        <button onclick="mostrarRespuesta('D')">Mostrar D</button>
-      </div>
-      <div class="options">
-        <div class="option" id="optA">A</div>
-        <div class="option" id="optB">B</div>
-        <div class="option" id="optC">C</div>
-        <div class="option" id="optD">D</div>
+  <div id="menu-lateral">
+    <div class="panel-admin-btn" onclick="mostrarPanelAdmin()">⚙️ Administración</div>
+  </div>
+  <div id="contenido-panel">
+    <h1>🎮 Panel de Control - Viperreto</h1>
+
+    <div id="panel-admin">
+      <h2>🎛️ Panel de Administración</h2>
+      <label><input type="checkbox" id="comodin50" onchange="guardarComodin('comodin50', this.checked)"> Habilitar 50/50</label>
+      <label><input type="checkbox" id="comodinChat" onchange="guardarComodin('comodinChat', this.checked)"> Habilitar Preguntar al chat</label>
+      <label><input type="checkbox" id="comodinLlamada" onchange="guardarComodin('comodinLlamada', this.checked)"> Habilitar Llamar</label>
+      <label><input type="checkbox" id="comodinRebote" onchange="guardarComodin('comodinRebote', this.checked)"> Habilitar Rebote</label>
+      <div style="margin-top:15px;">
+        <button onclick="retrocederIndex()">⬅️ Retroceder en index</button>
+        <button onclick="avanzarIndex()">➡️ Siguiente en index</button>
+        <button onclick="reiniciarIndex()">🔄 Reiniciar index</button>
       </div>
     </div>
+
+    <div id="panel"></div>
   </div>
 
   <script>
-    let currentPregunta = "";
-    let currentOpciones = [];
-    let correcta = "A";
-    let numero = 1;
+    const preguntas = Array.from({ length: 14 }, (_, i) => ({
+      id: 'q' + (i + 1),
+      numero: i + 1,
+      texto: '',
+      opciones: ['', '', '', ''],
+      correcta: 'A',
+    }));
 
-    function mostrarPregunta() {
-      document.getElementById("pregunta").innerText = currentPregunta;
+    const panel = document.getElementById('panel');
+    const menu = document.getElementById('menu-lateral');
+
+    preguntas.forEach(p => {
+      const btn = document.createElement('div');
+      btn.className = 'boton-pregunta';
+      btn.innerText = `Pregunta ${p.numero}`;
+      btn.onclick = () => mostrarContenido(p.id);
+      menu.appendChild(btn);
+
+      const bloque = document.createElement('div');
+      bloque.className = 'contenido';
+      bloque.id = `contenido-${p.id}`;
+      bloque.innerHTML = `
+        <div class="bloque">
+          <h2 style="text-align:center; color:#f44;">Panel de Pregunta ${p.numero}</h2>
+          <input type="text" id="${p.id}" placeholder="Escribe la pregunta...">
+          <div class="opcion"><input type="text" id="${p.id}a" placeholder="Opción A"></div>
+          <div class="opcion"><input type="text" id="${p.id}b" placeholder="Opción B"></div>
+          <div class="opcion"><input type="text" id="${p.id}c" placeholder="Opción C"></div>
+          <div class="opcion"><input type="text" id="${p.id}d" placeholder="Opción D"></div>
+          <select id="${p.id}correcta">
+            <option value="A">Respuesta Correcta: A</option>
+            <option value="B">Respuesta Correcta: B</option>
+            <option value="C">Respuesta Correcta: C</option>
+            <option value="D">Respuesta Correcta: D</option>
+          </select>
+          <div class="botones-control">
+            <button onclick="mostrarOpcion('${p.id}', 'a')">Mostrar A</button>
+            <button onclick="mostrarOpcion('${p.id}', 'b')">Mostrar B</button>
+            <button onclick="mostrarOpcion('${p.id}', 'c')">Mostrar C</button>
+            <button onclick="mostrarOpcion('${p.id}', 'd')">Mostrar D</button>
+          </div>
+          <div class="botones-control">
+            <button onclick="enviarPregunta('${p.id}')">📡 Lanzar Pregunta</button>
+            <button onclick="revelarResultado('${p.id}')">✅ Mostrar Resultado</button>
+          </div>
+        </div>`;
+      panel.appendChild(bloque);
+    });
+
+    function mostrarContenido(id) {
+      document.getElementById('panel-admin').style.display = 'none';
+      document.querySelectorAll('.contenido').forEach(el => el.style.display = 'none');
+      const mostrar = document.getElementById(`contenido-${id}`);
+      if (mostrar) mostrar.style.display = 'block';
     }
 
-    function mostrarRespuesta(letra) {
-      const index = { A: 0, B: 1, C: 2, D: 3 }[letra];
-      const opcion = document.getElementById("opt" + letra);
-      opcion.innerText = `${letra}) ${currentOpciones[index]}`;
-      opcion.style.display = "block";
-
-      const jugador = localStorage.getItem("respuestaJugador") || "";
-      if (jugador === letra) {
-        opcion.classList.add(letra === correcta ? "correct" : "incorrect");
-      } else if (letra === correcta) {
-        opcion.classList.add("correct");
-      }
+    function mostrarPanelAdmin() {
+      document.querySelectorAll('.contenido').forEach(el => el.style.display = 'none');
+      document.getElementById('panel-admin').style.display = 'block';
     }
 
-    setInterval(() => {
-      const pregunta = localStorage.getItem("pregunta") || "";
-      const opcionesRaw = JSON.parse(localStorage.getItem("opciones") || "[]");
-      correcta = localStorage.getItem("respuestaCorrecta") || "A";
-      numero = localStorage.getItem("numeroPregunta") || 1;
-      currentPregunta = pregunta;
-      currentOpciones = opcionesRaw;
+    function mostrarOpcion(id, letra) {
+      const div = document.getElementById(`${id}${letra}`).parentElement;
+      div.style.display = 'block';
+    }
 
-      document.getElementById("progreso").innerText = `Pregunta ${numero} de 14`;
-    }, 500);
+    function enviarPregunta(id) {
+      const pregunta = document.getElementById(id).value;
+      const opciones = ['a', 'b', 'c', 'd'].map(l => document.getElementById(id + l).value);
+      const correcta = document.getElementById(id + 'correcta').value;
+
+      localStorage.setItem("pregunta", pregunta);
+      localStorage.setItem("opciones", JSON.stringify(opciones));
+      localStorage.setItem("respuestaCorrecta", correcta);
+      localStorage.setItem("numeroPregunta", parseInt(id.replace('q', '')));
+      localStorage.removeItem("respuestaJugador");
+
+      alert("Pregunta lanzada");
+    }
+
+    function revelarResultado(id) {
+      const jugador = prompt("¿Qué opción seleccionó el jugador? (A/B/C/D)", "");
+      if (!jugador) return;
+      localStorage.setItem("respuestaJugador", jugador.toUpperCase());
+    }
+
+    function guardarComodin(nombre, activo) {
+      localStorage.setItem(nombre, activo ? 'true' : 'false');
+    }
+
+    function avanzarIndex() {
+      let index = parseInt(localStorage.getItem("numeroPregunta") || "0");
+      index = Math.min(index + 1, 14);
+      localStorage.setItem("numeroPregunta", index);
+    }
+
+    function retrocederIndex() {
+      let index = parseInt(localStorage.getItem("numeroPregunta") || "0");
+      index = Math.max(index - 1, 1);
+      localStorage.setItem("numeroPregunta", index);
+    }
+
+    function reiniciarIndex() {
+      localStorage.clear();
+    }
+
+    mostrarContenido('q1');
   </script>
 </body>
 </html>
+
