@@ -128,7 +128,6 @@
 
     <div id="panel-admin">
       <h2>🎛️ Panel de Administración</h2>
-      <!-- contenido de configuración -->
     </div>
 
     <div id="panel"></div>
@@ -169,10 +168,10 @@
             <option value="D">Opción Correcta: D</option>
           </select>
           <div class="control-respuesta">
-            <button onclick="mostrarOpcion('${p.id}', 'a')">A Mostrar/Ocultar/Seleccionar</button>
-            <button onclick="mostrarOpcion('${p.id}', 'b')">B Mostrar/Ocultar/Seleccionar</button>
-            <button onclick="mostrarOpcion('${p.id}', 'c')">C Mostrar/Ocultar/Seleccionar</button>
-            <button onclick="mostrarOpcion('${p.id}', 'd')">D Mostrar/Ocultar/Seleccionar</button>
+            <button onclick="accionRespuesta('${p.id}', 'a')">A Mostrar/Ocultar/Seleccionar</button>
+            <button onclick="accionRespuesta('${p.id}', 'b')">B Mostrar/Ocultar/Seleccionar</button>
+            <button onclick="accionRespuesta('${p.id}', 'c')">C Mostrar/Ocultar/Seleccionar</button>
+            <button onclick="accionRespuesta('${p.id}', 'd')">D Mostrar/Ocultar/Seleccionar</button>
           </div>
           <button class="enviar" onclick="enviarPregunta('${p.id}')">📡 Lanzar Pregunta</button>
           <button class="enviar" onclick="revelarResultado('${p.id}')">✅ Lanzar Respuesta</button>
@@ -192,9 +191,13 @@
       document.getElementById('panel-admin').style.display = 'block';
     }
 
-    function mostrarOpcion(id, letra) {
-      const campo = document.getElementById(id + letra);
-      campo.style.display = campo.style.display === 'none' ? 'block' : 'none';
+    function accionRespuesta(id, letra) {
+      let mostrar = localStorage.getItem(`mostrar_${letra}`);
+      if (mostrar === 'true') {
+        localStorage.setItem(`mostrar_${letra}`, 'false');
+      } else {
+        localStorage.setItem(`mostrar_${letra}`, 'true');
+      }
       document.getElementById(id + 'correcta').value = letra.toUpperCase();
     }
 
@@ -202,12 +205,12 @@
       const pregunta = document.getElementById(id).value;
       const opciones = ['a', 'b', 'c', 'd'].map(l => document.getElementById(id + l).value);
       const correcta = document.getElementById(id + 'correcta').value;
+
       localStorage.setItem("pregunta", pregunta);
       localStorage.setItem("opciones", JSON.stringify(opciones));
       localStorage.setItem("respuestaCorrecta", correcta);
       localStorage.setItem("numeroPregunta", parseInt(id.replace('q', '')));
       localStorage.removeItem("respuestaJugador");
-      alert("Pregunta lanzada");
     }
 
     function revelarResultado(id) {
@@ -220,6 +223,5 @@
   </script>
 </body>
 </html>
-
 
 
