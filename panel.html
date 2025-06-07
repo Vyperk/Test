@@ -103,21 +103,25 @@
       padding: 30px;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
     }
-    .controlador button {
+    .boton-control {
       font-size: 1em;
       padding: 12px;
-      width: 220px;
-      margin-bottom: 15px;
       background: black;
       color: white;
       border: 2px solid red;
       border-radius: 30px;
       cursor: pointer;
       transition: 0.2s;
+      text-align: center;
     }
-    .controlador button:hover {
+    .boton-control:hover {
       background: red;
       color: white;
+    }
+    .control-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
     }
   </style>
 </head>
@@ -131,11 +135,14 @@
       <div style="display: flex; flex-wrap: wrap; gap: 40px;">
         <div id="panel"></div>
         <div class="controlador">
-          <button onclick="mostrarParte('pregunta')">Mostrar Pregunta</button>
-          <button onclick="mostrarParte('A')">Mostrar Opción A</button>
-          <button onclick="mostrarParte('B')">Mostrar Opción B</button>
-          <button onclick="mostrarParte('C')">Mostrar Opción C</button>
-          <button onclick="mostrarParte('D')">Mostrar Opción D</button>
+          <div class="control-grid">
+            <button class="boton-control" onclick="mostrarParte('pregunta')">Mostrar Pregunta</button>
+            <button class="boton-control" onclick="mostrarParte('A')">Mostrar Opción A</button>
+            <button class="boton-control" onclick="mostrarParte('B')">Mostrar Opción B</button>
+            <button class="boton-control" onclick="mostrarParte('C')">Mostrar Opción C</button>
+            <button class="boton-control" onclick="mostrarParte('D')">Mostrar Opción D</button>
+            <button class="boton-control" onclick="seleccionarRespuesta()">Seleccionar Respuesta Correcta</button>
+          </div>
         </div>
       </div>
     </div>
@@ -187,7 +194,12 @@
       localStorage.setItem(`mostrar_${parte.toLowerCase()}`, 'true');
     }
 
+    function seleccionarRespuesta() {
+      alert("Función de seleccionar respuesta correcta aún no implementada.");
+    }
+
     mostrarContenido('q1');
   </script>
 </body>
 </html>
+
