@@ -71,7 +71,7 @@
       border: 2px solid #ff0000;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
     }
-    .bloque input {
+    .bloque input, .controlador button {
       font-size: 1.1em;
       padding: 14px;
       border-radius: 30px;
@@ -96,22 +96,8 @@
       width: 100%;
       max-width: 620px;
     }
-    .controlador button {
-      font-size: 1.1em;
-      padding: 18px;
-      border-radius: 40px;
-      width: 240px;
-      background: black;
-      border: 3px solid red;
-      color: white;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 0 10px red;
-    }
     .controlador button:hover {
       background-color: red;
-      color: white;
-      box-shadow: 0 0 15px red;
     }
   </style>
 </head>
@@ -125,11 +111,11 @@
       <div style="display: flex; gap: 20px;">
         <div id="panel"></div>
         <div class="controlador">
-          <button onclick="mostrarParte('pregunta')">Mostrar<br>Pregunta</button>
-          <button onclick="mostrarParte('A')">Mostrar Opción<br>A</button>
-          <button onclick="mostrarParte('B')">Mostrar Opción<br>B</button>
-          <button onclick="mostrarParte('C')">Mostrar Opción<br>C</button>
-          <button onclick="mostrarParte('D')">Mostrar Opción<br>D</button>
+          <button onclick="mostrarParte('pregunta')">Mostrar Pregunta</button>
+          <button onclick="mostrarParte('A')">Mostrar Opción A</button>
+          <button onclick="mostrarParte('B')">Mostrar Opción B</button>
+          <button onclick="mostrarParte('C')">Mostrar Opción C</button>
+          <button onclick="mostrarParte('D')">Mostrar Opción D</button>
         </div>
       </div>
     </div>
@@ -178,4 +164,11 @@
     }
 
     function mostrarParte(parte) {
-      localStorage.setItem(`most
+      localStorage.setItem(`mostrar_${parte.toLowerCase()}`, 'true');
+    }
+
+    mostrarContenido('q1');
+  </script>
+</body>
+</html>
+
