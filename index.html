@@ -77,14 +77,17 @@
       padding: 20px 30px;
       font-size: 1.2em;
       text-align: center;
-      cursor: pointer;
       transition: 0.3s;
     }
 
-    .opcion:hover {
-      background: red;
-      color: white;
-      border-color: red;
+    .correcta {
+      background-color: green !important;
+      border-color: green !important;
+    }
+
+    .incorrecta {
+      background-color: darkred !important;
+      border-color: darkred !important;
     }
 
     #comodines {
@@ -101,17 +104,10 @@
       border: 2px solid red;
       border-radius: 10px;
       padding: 10px 20px;
-      cursor: pointer;
       font-size: 1.2em;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: 0.3s;
-    }
-
-    .comodin:hover {
-      background: red;
-      color: white;
     }
   </style>
 </head>
@@ -134,25 +130,31 @@
   </div>
 
   <div id="comodines">
-    <div class="comodin" onclick="usarComodin('5050')">🧠 50/50</div>
-    <div class="comodin" onclick="usarComodin('chat')">💬 Preguntar al chat</div>
-    <div class="comodin" onclick="usarComodin('llamada')">📞 Llamar</div>
-    <div class="comodin" onclick="usarComodin('rebote')">🎲 Rebote</div>
+    <div class="comodin">🧠 50/50</div>
+    <div class="comodin">💬 Preguntar al chat</div>
+    <div class="comodin">📞 Llamar</div>
+    <div class="comodin">🎲 Rebote</div>
   </div>
 
   <script>
-    let preguntaActual = 0; // Controla la pregunta actual (0 al iniciar)
+    let preguntaActual = 0;
 
-    function cargarPregunta(pregunta, opciones) {
+    function cargarPregunta(pregunta, opciones, correcta, jugador) {
       document.getElementById("pregunta").innerText = pregunta;
-      document.getElementById("optA").innerText = "A) " + opciones[0];
-      document.getElementById("optB").innerText = "B) " + opciones[1];
-      document.getElementById("optC").innerText = "C) " + opciones[2];
-      document.getElementById("optD").innerText = "D) " + opciones[3];
-    }
 
-    function usarComodin(tipo) {
-      alert(`Comodín activado: ${tipo.toUpperCase()}`);
+      const letras = ["A", "B", "C", "D"];
+      letras.forEach((letra, i) => {
+        const id = "opt" + letra;
+        const btn = document.getElementById(id);
+        btn.innerText = letra + ") " + opciones[i];
+        btn.className = "opcion";
+
+        if (letra === correcta) {
+          btn.classList.add("correcta");
+        } else if (letra === jugador) {
+          btn.classList.add("incorrecta");
+        }
+      });
     }
 
     function actualizarBarra() {
@@ -164,8 +166,11 @@
       const pregunta = localStorage.getItem("pregunta");
       const opciones = JSON.parse(localStorage.getItem("opciones") || "[]");
       const index = parseInt(localStorage.getItem("numeroPregunta") || "0");
+      const correcta = localStorage.getItem("respuestaCorrecta") || "A";
+      const jugador = localStorage.getItem("respuestaJugador") || "";
+
       if (pregunta && opciones.length === 4) {
-        cargarPregunta(pregunta, opciones);
+        cargarPregunta(pregunta, opciones, correcta, jugador);
         preguntaActual = index;
         actualizarBarra();
       }
@@ -173,4 +178,5 @@
   </script>
 </body>
 </html>
+
 
