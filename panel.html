@@ -3,34 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel de Control - Viperreto</title>
+  <title>Panel Viperreto Avanzado</title>
   <style>
-    body {background: #111; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 30px;}
-    input, button {margin: 8px; padding: 10px; font-size: 1em; border: none; border-radius: 6px;}
-    input {width: 90%; max-width: 600px;}
-    button {background: red; color: white; cursor: pointer;}
+    body {
+      background: #111;
+      color: white;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: red;
+    }
+    .pregunta-bloque {
+      border: 1px solid #444;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #222;
+    }
+    .pregunta-bloque input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+    }
+    .pregunta-bloque button {
+      padding: 10px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .pregunta-bloque button:hover {
+      background: darkred;
+    }
   </style>
 </head>
 <body>
-  <h1>🎮 Panel de Control Viperreto</h1>
-  <input type="text" id="pregunta" placeholder="Escribe la pregunta aquí" />
-  <input type="text" id="optA" placeholder="Opción A" />
-  <input type="text" id="optB" placeholder="Opción B" />
-  <input type="text" id="optC" placeholder="Opción C" />
-  <input type="text" id="optD" placeholder="Opción D" />
-  <button onclick="enviar()">📡 Enviar Pregunta</button>
+  <h1>🎮 Panel de Preguntas - Viperreto</h1>
+
+  <div class="pregunta-bloque">
+    <input type="text" id="q1" value="¿Cuál es la capital de República Dominicana?">
+    <input type="text" id="q1a" value="Santo Domingo">
+    <input type="text" id="q1b" value="Santiago">
+    <input type="text" id="q1c" value="La Vega">
+    <input type="text" id="q1d" value="Punta Cana">
+    <button onclick="enviarPregunta('q1')">📡 Lanzar Pregunta 1</button>
+  </div>
+
+  <div class="pregunta-bloque">
+    <input type="text" id="q2" value="¿Qué streamer creó El Viperreto?">
+    <input type="text" id="q2a" value="Amir Cabrera">
+    <input type="text" id="q2b" value="Ibai">
+    <input type="text" id="q2c" value="IlloJuan">
+    <input type="text" id="q2d" value="Eladio Carrión">
+    <button onclick="enviarPregunta('q2')">📡 Lanzar Pregunta 2</button>
+  </div>
+
   <script>
-    function enviar() {
-      const pregunta = document.getElementById('pregunta').value;
+    function enviarPregunta(id) {
+      const pregunta = document.getElementById(id).value;
       const opciones = [
-        document.getElementById('optA').value,
-        document.getElementById('optB').value,
-        document.getElementById('optC').value,
-        document.getElementById('optD').value
+        document.getElementById(id + 'a').value,
+        document.getElementById(id + 'b').value,
+        document.getElementById(id + 'c').value,
+        document.getElementById(id + 'd').value
       ];
+
       localStorage.setItem("pregunta", pregunta);
       localStorage.setItem("opciones", JSON.stringify(opciones));
-      alert("📢 Pregunta enviada a pantalla del stream");
+
+      alert(`📢 Pregunta lanzada: ${pregunta}`);
     }
   </script>
 </body>
