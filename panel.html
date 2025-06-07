@@ -3,117 +3,173 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel Viperreto Avanzado</title>
+  <title>El Viperreto - Juego</title>
   <style>
-    body {
-      background: #111;
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      font-family: 'Segoe UI', sans-serif;
       color: white;
-      font-family: sans-serif;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: red;
-    }
-    h2 {
-      color: orange;
-      margin-top: 40px;
-      text-align: center;
-    }
-    .pregunta-bloque {
-      border: 1px solid #444;
-      border-radius: 8px;
-      margin: 10px auto;
-      padding: 10px;
-      background: #222;
-      max-width: 500px;
-    }
-    .pregunta-bloque input {
       width: 100%;
-      margin-bottom: 8px;
-      padding: 6px;
-      border-radius: 4px;
-      border: none;
-      font-size: 0.9em;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
     }
-    .pregunta-bloque button {
-      padding: 8px;
+
+    #titulo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.8em;
+      color: red;
+      font-weight: bold;
+    }
+
+    #barra-progreso-container {
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 15px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #barra-progreso {
+      height: 100%;
+      background: red;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    #pregunta-container {
+      position: absolute;
+      top: 110px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(20, 20, 20, 0.85);
+      padding: 15px 25px;
+      border-radius: 12px;
+      border: 2px solid red;
+      box-shadow: 0 0 15px red;
+      font-size: 1.5em;
+      text-align: center;
+    }
+
+    #opciones {
+      position: absolute;
+      top: 230px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .opcion {
+      background: #111;
+      border: 2px solid white;
+      border-radius: 10px;
+      padding: 20px 30px;
+      font-size: 1.2em;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .opcion:hover {
       background: red;
       color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9em;
+      border-color: red;
     }
-    .pregunta-bloque button:hover {
-      background: darkred;
+
+    #comodines {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+    }
+
+    .comodin {
+      background: #222;
+      border: 2px solid red;
+      border-radius: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.3s;
+    }
+
+    .comodin:hover {
+      background: red;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <h1>🎮 Panel de Preguntas - Viperreto</h1>
+  <div id="titulo">EL VIPERRETO</div>
 
-  <h2>Dificultad Fácil</h2>
-  <div id="bloques"></div>
+  <div id="barra-progreso-container">
+    <div id="barra-progreso"></div>
+  </div>
+
+  <div id="pregunta-container">
+    <div id="pregunta">Cargando pregunta...</div>
+  </div>
+
+  <div id="opciones">
+    <div class="opcion" id="optA">A) Opción A</div>
+    <div class="opcion" id="optB">B) Opción B</div>
+    <div class="opcion" id="optC">C) Opción C</div>
+    <div class="opcion" id="optD">D) Opción D</div>
+  </div>
+
+  <div id="comodines">
+    <div class="comodin" onclick="usarComodin('5050')">🧠 50/50</div>
+    <div class="comodin" onclick="usarComodin('chat')">💬 Preguntar al chat</div>
+    <div class="comodin" onclick="usarComodin('llamada')">📞 Llamar</div>
+    <div class="comodin" onclick="usarComodin('rebote')">🎲 Rebote</div>
+  </div>
 
   <script>
-    const preguntas = [
-      { id: 'q1', cat: 'Fácil', texto: '¿Cuál es la capital de República Dominicana?', opciones: ['Santo Domingo', 'Santiago', 'La Vega', 'Punta Cana'] },
-      { id: 'q2', cat: 'Fácil', texto: '¿Qué streamer creó El Viperreto?', opciones: ['Amir Cabrera', 'Ibai', 'IlloJuan', 'Eladio Carrión'] },
-      { id: 'q3', cat: 'Fácil', texto: '', opciones: ['', '', '', ''] },
-      { id: 'q4', cat: 'Fácil', texto: '', opciones: ['', '', '', ''] },
+    let preguntaActual = 0; // Controla la pregunta actual (0 al iniciar)
 
-      { id: 'q5', cat: 'Media', texto: '', opciones: ['', '', '', ''] },
-      { id: 'q6', cat: 'Media', texto: '', opciones: ['', '', '', ''] },
-      { id: 'q7', cat: 'Media', texto: '', opciones: ['', '', '', ''] },
-      { id: 'q8', cat: 'Media', texto: '', opciones: ['', '', '', ''] },
-      { id: 'q9', cat: 'Media', texto: '', opciones: ['', '', '', ''] },
-
-      { id: 'q10', cat: 'Alta', texto: '', opciones: ['', '', '', ''] },
-      { id: 'q11', cat: 'Alta', texto: '', opciones: ['', '', '', ''] },
-      { id: 'q12', cat: 'Alta', texto: '', opciones: ['', '', '', ''] },
-
-      { id: 'q13', cat: 'Gran Premio', texto: '', opciones: ['', '', '', ''] },
-      { id: 'q14', cat: 'Gran Premio', texto: '', opciones: ['', '', '', ''] },
-    ];
-
-    const contenedor = document.getElementById('bloques');
-    let ultimaCategoria = 'Fácil';
-
-    preguntas.forEach(p => {
-      if (p.cat !== ultimaCategoria) {
-        const h2 = document.createElement('h2');
-        h2.textContent = `Dificultad ${p.cat}`;
-        contenedor.appendChild(h2);
-        ultimaCategoria = p.cat;
-      }
-      const bloque = document.createElement('div');
-      bloque.className = 'pregunta-bloque';
-      bloque.innerHTML = `
-        <input type="text" id="${p.id}" value="${p.texto}" placeholder="Escribe la pregunta...">
-        <input type="text" id="${p.id}a" value="${p.opciones[0]}" placeholder="Opción A">
-        <input type="text" id="${p.id}b" value="${p.opciones[1]}" placeholder="Opción B">
-        <input type="text" id="${p.id}c" value="${p.opciones[2]}" placeholder="Opción C">
-        <input type="text" id="${p.id}d" value="${p.opciones[3]}" placeholder="Opción D">
-        <button onclick="enviarPregunta('${p.id}')">📡 Lanzar Pregunta</button>
-      `;
-      contenedor.appendChild(bloque);
-    });
-
-    function enviarPregunta(id) {
-      const pregunta = document.getElementById(id).value;
-      const opciones = [
-        document.getElementById(id + 'a').value,
-        document.getElementById(id + 'b').value,
-        document.getElementById(id + 'c').value,
-        document.getElementById(id + 'd').value
-      ];
-
-      localStorage.setItem("pregunta", pregunta);
-      localStorage.setItem("opciones", JSON.stringify(opciones));
-
-      alert(`📢 Pregunta lanzada: ${pregunta}`);
+    function cargarPregunta(pregunta, opciones) {
+      document.getElementById("pregunta").innerText = pregunta;
+      document.getElementById("optA").innerText = "A) " + opciones[0];
+      document.getElementById("optB").innerText = "B) " + opciones[1];
+      document.getElementById("optC").innerText = "C) " + opciones[2];
+      document.getElementById("optD").innerText = "D) " + opciones[3];
     }
+
+    function usarComodin(tipo) {
+      alert(`Comodín activado: ${tipo.toUpperCase()}`);
+    }
+
+    function actualizarBarra() {
+      const progreso = Math.min((preguntaActual / 14) * 100, 100);
+      document.getElementById("barra-progreso").style.width = progreso + "%";
+    }
+
+    setInterval(() => {
+      const pregunta = localStorage.getItem("pregunta");
+      const opciones = JSON.parse(localStorage.getItem("opciones") || "[]");
+      const index = parseInt(localStorage.getItem("numeroPregunta") || "0");
+      if (pregunta && opciones.length === 4) {
+        cargarPregunta(pregunta, opciones);
+        preguntaActual = index;
+        actualizarBarra();
+      }
+    }, 1000);
   </script>
 </body>
 </html>
