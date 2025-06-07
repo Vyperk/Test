@@ -135,6 +135,29 @@
       gap: 15px;
       width: 600px;
     }
+    .comodines {
+      margin-top: 30px;
+      width: 600px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+    .boton-comodin {
+      background: #111;
+      color: white;
+      border: 2px solid red;
+      border-radius: 30px;
+      padding: 12px;
+      font-size: 1em;
+      cursor: pointer;
+      text-align: center;
+      transition: 0.3s;
+      height: 60px;
+    }
+    .boton-comodin:hover {
+      background: red;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -154,6 +177,11 @@
             <button class="boton-control" onclick="mostrarParte('C')">Mostrar Opción C</button>
             <button class="boton-control" onclick="mostrarParte('D')">Mostrar Opción D</button>
             <button class="boton-control" onclick="seleccionarRespuesta()">Seleccionar Respuesta Correcta</button>
+          </div>
+          <div class="comodines">
+            <button class="boton-comodin" onclick="usarComodin('50/50')">🧠 50/50</button>
+            <button class="boton-comodin" onclick="usarComodin('chat')">💬 Preguntar al Chat</button>
+            <button class="boton-comodin" onclick="usarComodin('call')">📞 Llamada</button>
           </div>
         </div>
       </div>
@@ -202,4 +230,20 @@
       document.querySelectorAll('.contenido').forEach(el => el.style.display = 'none');
     }
 
+    function mostrarParte(parte) {
+      localStorage.setItem(`mostrar_${parte.toLowerCase()}`, 'true');
+    }
+
+    function seleccionarRespuesta() {
+      alert("Función de seleccionar respuesta correcta aún no implementada.");
+    }
+
+    function usarComodin(tipo) {
+      localStorage.setItem(`comodin_${tipo}`, 'true');
+    }
+
+    mostrarContenido('q1');
+  </script>
+</body>
+</html>
 
