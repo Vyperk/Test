@@ -1,227 +1,163 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>El Viperreto - Juego</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Viperreto Avanzado</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: transparent;
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      position: relative;
-    }
-
-    #titulo {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 2.8em;
-      color: red;
-      font-weight: bold;
-    }
-
-    #barra-progreso-container {
-      position: absolute;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      height: 15px;
-      background: #333;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    #barra-progreso {
-      height: 100%;
-      background: red;
-      width: 0%;
-      transition: width 0.5s ease;
-    }
-
-    #pregunta-container {
-      position: absolute;
-      top: 110px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(20, 20, 20, 0.85);
-      padding: 15px 25px;
-      border-radius: 12px;
-      border: 2px solid red;
-      box-shadow: 0 0 15px red;
-      font-size: 1.5em;
-      text-align: center;
-    }
-
-    #opciones {
-      position: absolute;
-      top: 230px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .opcion {
+    body {
       background: #111;
-      border: 2px solid white;
-      border-radius: 10px;
-      padding: 20px 30px;
-      font-size: 1.2em;
-      text-align: center;
-      transition: 0.3s;
-    }
-
-    .correcta {
-      background-color: green !important;
-      border-color: green !important;
-    }
-
-    .incorrecta {
-      background-color: darkred !important;
-      border-color: darkred !important;
-    }
-
-    #menu-preguntas {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 220px;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      border-left: 2px solid red;
+      color: white;
+      font-family: sans-serif;
+      padding: 20px;
       display: flex;
-      flex-direction: column;
-      padding: 10px;
-      gap: 10px;
-      overflow-y: auto;
     }
-
-    .boton-pregunta {
+    #menu-lateral {
+      width: 200px;
+      border-right: 2px solid red;
+      padding-right: 10px;
+    }
+    #menu-lateral .boton-pregunta {
       background: #222;
       border: 1px solid red;
       color: white;
       padding: 10px;
       border-radius: 6px;
+      margin-bottom: 8px;
       cursor: pointer;
       text-align: center;
-      transition: 0.2s;
     }
-
-    .boton-pregunta:hover {
+    #menu-lateral .boton-pregunta:hover {
       background: red;
     }
-
-    #comodines {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 15px;
+    #contenido-panel {
+      flex: 1;
+      padding-left: 20px;
     }
-
-    .comodin {
-      background: #222;
-      border: 2px solid red;
-      border-radius: 10px;
-      padding: 10px 20px;
-      font-size: 1.2em;
+    h1 {
+      text-align: center;
+      color: red;
+    }
+    .contenido {
+      display: none;
+      margin-top: 10px;
+    }
+    .bloque input, .bloque select, .bloque button {
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 6px;
+      font-size: 0.9em;
+    }
+    .botones-control {
       display: flex;
-      align-items: center;
-      gap: 8px;
+      gap: 5px;
+    }
+    .botones-control button {
+      flex: 1;
+      padding: 5px;
+      font-size: 0.85em;
+      cursor: pointer;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .botones-control button:hover {
+      background: darkred;
+    }
+    .opcion {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <div id="titulo">EL VIPERRETO</div>
-
-  <div id="barra-progreso-container">
-    <div id="barra-progreso"></div>
-  </div>
-
-  <div id="pregunta-container">
-    <div id="pregunta">Cargando pregunta...</div>
-  </div>
-
-  <div id="opciones">
-    <div class="opcion" id="optA">A) Opción A</div>
-    <div class="opcion" id="optB">B) Opción B</div>
-    <div class="opcion" id="optC">C) Opción C</div>
-    <div class="opcion" id="optD">D) Opción D</div>
-  </div>
-
-  <div id="comodines">
-    <div class="comodin">🧠 50/50</div>
-    <div class="comodin">💬 Preguntar al chat</div>
-    <div class="comodin">📞 Llamar</div>
-    <div class="comodin">🎲 Rebote</div>
-  </div>
-
-  <div id="menu-preguntas">
-    <div class="boton-pregunta">Pregunta 1</div>
-    <div class="boton-pregunta">Pregunta 2</div>
-    <div class="boton-pregunta">Pregunta 3</div>
-    <div class="boton-pregunta">Pregunta 4</div>
-    <div class="boton-pregunta">Pregunta 5</div>
-    <div class="boton-pregunta">Pregunta 6</div>
-    <div class="boton-pregunta">Pregunta 7</div>
-    <div class="boton-pregunta">Pregunta 8</div>
-    <div class="boton-pregunta">Pregunta 9</div>
-    <div class="boton-pregunta">Pregunta 10</div>
-    <div class="boton-pregunta">Pregunta 11</div>
-    <div class="boton-pregunta">Pregunta 12</div>
-    <div class="boton-pregunta">Pregunta 13</div>
-    <div class="boton-pregunta">Pregunta 14</div>
+  <div id="menu-lateral"></div>
+  <div id="contenido-panel">
+    <h1>🎮 Panel de Control - Viperreto</h1>
+    <div id="panel"></div>
   </div>
 
   <script>
-    let preguntaActual = 0;
+    const preguntas = Array.from({ length: 14 }, (_, i) => ({
+      id: 'q' + (i + 1),
+      numero: i + 1,
+      texto: '',
+      opciones: ['', '', '', ''],
+      correcta: 'A',
+    }));
 
-    function cargarPregunta(pregunta, opciones, correcta, jugador) {
-      document.getElementById("pregunta").innerText = pregunta;
+    const panel = document.getElementById('panel');
+    const menu = document.getElementById('menu-lateral');
 
-      const letras = ["A", "B", "C", "D"];
-      letras.forEach((letra, i) => {
-        const id = "opt" + letra;
-        const btn = document.getElementById(id);
-        btn.innerText = letra + ") " + opciones[i];
-        btn.className = "opcion";
+    preguntas.forEach(p => {
+      const btn = document.createElement('div');
+      btn.className = 'boton-pregunta';
+      btn.innerText = `Pregunta ${p.numero}`;
+      btn.onclick = () => mostrarContenido(p.id);
+      menu.appendChild(btn);
 
-        if (letra === correcta) {
-          btn.classList.add("correcta");
-        } else if (letra === jugador) {
-          btn.classList.add("incorrecta");
-        }
-      });
+      const bloque = document.createElement('div');
+      bloque.className = 'contenido';
+      bloque.id = `contenido-${p.id}`;
+      bloque.innerHTML = `
+        <div class="bloque">
+          <input type="text" id="${p.id}" placeholder="Escribe la pregunta...">
+          <div class="opcion"><input type="text" id="${p.id}a" placeholder="Opción A"></div>
+          <div class="opcion"><input type="text" id="${p.id}b" placeholder="Opción B"></div>
+          <div class="opcion"><input type="text" id="${p.id}c" placeholder="Opción C"></div>
+          <div class="opcion"><input type="text" id="${p.id}d" placeholder="Opción D"></div>
+          <select id="${p.id}correcta">
+            <option value="A">Respuesta Correcta: A</option>
+            <option value="B">Respuesta Correcta: B</option>
+            <option value="C">Respuesta Correcta: C</option>
+            <option value="D">Respuesta Correcta: D</option>
+          </select>
+          <div class="botones-control">
+            <button onclick="mostrarOpcion('${p.id}', 'a')">Mostrar A</button>
+            <button onclick="mostrarOpcion('${p.id}', 'b')">Mostrar B</button>
+            <button onclick="mostrarOpcion('${p.id}', 'c')">Mostrar C</button>
+            <button onclick="mostrarOpcion('${p.id}', 'd')">Mostrar D</button>
+          </div>
+          <div class="botones-control">
+            <button onclick="enviarPregunta('${p.id}')">📡 Lanzar Pregunta</button>
+            <button onclick="revelarResultado('${p.id}')">✅ Mostrar Resultado</button>
+          </div>
+        </div>`;
+      panel.appendChild(bloque);
+    });
+
+    function mostrarContenido(id) {
+      document.querySelectorAll('.contenido').forEach(el => el.style.display = 'none');
+      const mostrar = document.getElementById(`contenido-${id}`);
+      if (mostrar) mostrar.style.display = 'block';
     }
 
-    function actualizarBarra() {
-      const progreso = Math.min((preguntaActual / 14) * 100, 100);
-      document.getElementById("barra-progreso").style.width = progreso + "%";
+    function mostrarOpcion(id, letra) {
+      const div = document.getElementById(`${id}${letra}`).parentElement;
+      div.style.display = 'block';
     }
 
-    setInterval(() => {
-      const pregunta = localStorage.getItem("pregunta");
-      const opciones = JSON.parse(localStorage.getItem("opciones") || "[]");
-      const index = parseInt(localStorage.getItem("numeroPregunta") || "0");
-      const correcta = localStorage.getItem("respuestaCorrecta") || "A";
-      const jugador = localStorage.getItem("respuestaJugador") || "";
+    function enviarPregunta(id) {
+      const pregunta = document.getElementById(id).value;
+      const opciones = ['a', 'b', 'c', 'd'].map(l => document.getElementById(id + l).value);
+      const correcta = document.getElementById(id + 'correcta').value;
 
-      if (pregunta && opciones.length === 4) {
-        cargarPregunta(pregunta, opciones, correcta, jugador);
-        preguntaActual = index;
-        actualizarBarra();
-      }
-    }, 1000);
+      localStorage.setItem("pregunta", pregunta);
+      localStorage.setItem("opciones", JSON.stringify(opciones));
+      localStorage.setItem("respuestaCorrecta", correcta);
+      localStorage.setItem("numeroPregunta", parseInt(id.replace('q', '')));
+      localStorage.removeItem("respuestaJugador");
+
+      alert("Pregunta lanzada");
+    }
+
+    function revelarResultado(id) {
+      const correcta = document.getElementById(id + 'correcta').value;
+      const jugador = prompt("¿Qué opción seleccionó el jugador? (A/B/C/D)", "");
+      if (!jugador) return;
+
+      localStorage.setItem("respuestaJugador", jugador.toUpperCase());
+    }
   </script>
 </body>
 </html>
