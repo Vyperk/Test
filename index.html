@@ -8,7 +8,7 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: transparent; /* Fondo transparente */
+      background: transparent;
       font-family: 'Segoe UI', sans-serif;
       color: white;
       width: 100%;
@@ -26,6 +26,11 @@
       border: 2px solid red;
       box-shadow: 0 0 20px red;
       text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
     h1 {
       color: red;
@@ -34,6 +39,7 @@
     .question {
       font-size: 1.5em;
       margin: 20px 0;
+      animation: fadeIn 1s ease-in-out;
     }
     .options {
       display: grid;
@@ -53,6 +59,24 @@
       color: white;
       border-color: red;
     }
+    .lifelines {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .lifeline {
+      padding: 10px 15px;
+      background: #222;
+      border: 2px solid red;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .lifeline:hover {
+      background: red;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -65,6 +89,12 @@
       <div class="option" id="optC">C</div>
       <div class="option" id="optD">D</div>
     </div>
+    <div class="lifelines">
+      <div class="lifeline" onclick="usarComodin('5050')">🧠 50/50</div>
+      <div class="lifeline" onclick="usarComodin('chat')">📣 Preguntar al chat</div>
+      <div class="lifeline" onclick="usarComodin('llamada')">📞 Llamar a un amigo</div>
+      <div class="lifeline" onclick="usarComodin('rebote')">🎲 Rebote</div>
+    </div>
   </div>
   <script>
     function cargarPregunta(pregunta, opciones) {
@@ -74,6 +104,12 @@
       document.getElementById("optC").innerText = "C) " + opciones[2];
       document.getElementById("optD").innerText = "D) " + opciones[3];
     }
+
+    function usarComodin(tipo) {
+      alert(`Comodín activado: ${tipo.toUpperCase()}`);
+      // Aquí puedes enlazar sonidos o efectos visuales personalizados
+    }
+
     setInterval(() => {
       const pregunta = localStorage.getItem("pregunta");
       const opciones = JSON.parse(localStorage.getItem("opciones") || "[]");
@@ -84,3 +120,4 @@
   </script>
 </body>
 </html>
+
