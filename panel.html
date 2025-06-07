@@ -46,17 +46,21 @@
       flex: 1;
       padding: 40px 20px;
       overflow-y: auto;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
     }
     h1 {
       text-align: center;
       color: red;
       margin-bottom: 30px;
       font-size: 2em;
+      width: 100%;
     }
     .contenido {
       display: none;
     }
-    .bloque {
+    .bloque, .controlador {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -67,7 +71,7 @@
       border: 2px solid #ff0000;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
     }
-    .bloque input {
+    .bloque input, .controlador button {
       font-size: 1.1em;
       padding: 14px;
       border-radius: 30px;
@@ -92,6 +96,9 @@
       width: 100%;
       max-width: 620px;
     }
+    .controlador button:hover {
+      background-color: red;
+    }
   </style>
 </head>
 <body>
@@ -99,8 +106,19 @@
     <div class="panel-admin-btn" onclick="mostrarPanelAdmin()">⚙️ Administración</div>
   </div>
   <div id="contenido-panel">
-    <h1>🎮 Panel de Control - Viperreto</h1>
-    <div id="panel"></div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <h1>🎮 Panel de Control - Viperreto</h1>
+      <div style="display: flex; gap: 20px;">
+        <div id="panel"></div>
+        <div class="controlador">
+          <button onclick="mostrarParte('pregunta')">Mostrar Pregunta</button>
+          <button onclick="mostrarParte('A')">Mostrar Opción A</button>
+          <button onclick="mostrarParte('B')">Mostrar Opción B</button>
+          <button onclick="mostrarParte('C')">Mostrar Opción C</button>
+          <button onclick="mostrarParte('D')">Mostrar Opción D</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -145,8 +163,11 @@
       document.querySelectorAll('.contenido').forEach(el => el.style.display = 'none');
     }
 
+    function mostrarParte(parte) {
+      localStorage.setItem(`mostrar_${parte.toLowerCase()}`, 'true');
+    }
+
     mostrarContenido('q1');
   </script>
 </body>
 </html>
-
