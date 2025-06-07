@@ -14,88 +14,109 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative;
     }
-    .container {
-      max-width: 900px;
-      padding: 20px;
-      background: rgba(20, 20, 20, 0.85);
-      border-radius: 16px;
-      border: 2px solid red;
-      box-shadow: 0 0 20px red;
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    h1 {
+
+    #titulo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.8em;
       color: red;
-      font-size: 2.5em;
+      font-weight: bold;
     }
-    .question {
+
+    #pregunta-container {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(20, 20, 20, 0.85);
+      padding: 15px 25px;
+      border-radius: 12px;
+      border: 2px solid red;
+      box-shadow: 0 0 15px red;
       font-size: 1.5em;
-      margin: 20px 0;
-      animation: fadeIn 1s ease-in-out;
+      text-align: center;
     }
-    .options {
+
+    #opciones {
+      position: absolute;
+      top: 220px;
+      left: 50%;
+      transform: translateX(-50%);
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px;
+      gap: 20px;
     }
-    .option {
+
+    .opcion {
       background: #111;
       border: 2px solid white;
-      border-radius: 8px;
-      padding: 15px;
+      border-radius: 10px;
+      padding: 20px 30px;
+      font-size: 1.2em;
+      text-align: center;
       cursor: pointer;
       transition: 0.3s;
     }
-    .option:hover {
+
+    .opcion:hover {
       background: red;
       color: white;
       border-color: red;
     }
-    .lifelines {
-      margin-top: 20px;
+
+    #comodines {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      justify-content: center;
-      gap: 10px;
+      gap: 15px;
     }
-    .lifeline {
-      padding: 10px 15px;
+
+    .comodin {
       background: #222;
       border: 2px solid red;
-      border-radius: 8px;
+      border-radius: 10px;
+      padding: 10px 20px;
       cursor: pointer;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       transition: 0.3s;
     }
-    .lifeline:hover {
+
+    .comodin:hover {
       background: red;
       color: white;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>EL VIPERRETO</h1>
-    <div class="question" id="pregunta">Cargando pregunta...</div>
-    <div class="options">
-      <div class="option" id="optA">A</div>
-      <div class="option" id="optB">B</div>
-      <div class="option" id="optC">C</div>
-      <div class="option" id="optD">D</div>
-    </div>
-    <div class="lifelines">
-      <div class="lifeline" onclick="usarComodin('5050')">🧠 50/50</div>
-      <div class="lifeline" onclick="usarComodin('chat')">📣 Preguntar al chat</div>
-      <div class="lifeline" onclick="usarComodin('llamada')">📞 Llamar a un amigo</div>
-      <div class="lifeline" onclick="usarComodin('rebote')">🎲 Rebote</div>
-    </div>
+  <div id="titulo">EL VIPERRETO</div>
+
+  <div id="pregunta-container">
+    <div id="pregunta">Cargando pregunta...</div>
   </div>
+
+  <div id="opciones">
+    <div class="opcion" id="optA">A) Opción A</div>
+    <div class="opcion" id="optB">B) Opción B</div>
+    <div class="opcion" id="optC">C) Opción C</div>
+    <div class="opcion" id="optD">D) Opción D</div>
+  </div>
+
+  <div id="comodines">
+    <div class="comodin" onclick="usarComodin('5050')">🧠 50/50</div>
+    <div class="comodin" onclick="usarComodin('chat')">💬 Preguntar al chat</div>
+    <div class="comodin" onclick="usarComodin('llamada')">📞 Llamar</div>
+    <div class="comodin" onclick="usarComodin('rebote')">🎲 Rebote</div>
+  </div>
+
   <script>
     function cargarPregunta(pregunta, opciones) {
       document.getElementById("pregunta").innerText = pregunta;
@@ -107,7 +128,6 @@
 
     function usarComodin(tipo) {
       alert(`Comodín activado: ${tipo.toUpperCase()}`);
-      // Aquí puedes enlazar sonidos o efectos visuales personalizados
     }
 
     setInterval(() => {
@@ -120,4 +140,3 @@
   </script>
 </body>
 </html>
-
