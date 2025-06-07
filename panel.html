@@ -60,6 +60,11 @@
     .contenido {
       display: none;
     }
+    .bloque-container {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+    }
     .bloque, .controlador {
       display: flex;
       flex-direction: column;
@@ -132,7 +137,7 @@
   <div id="contenido-panel">
     <div style="display: flex; flex-direction: column; align-items: center;">
       <h1>🎮 Panel de Control - Viperreto</h1>
-      <div style="display: flex; flex-wrap: wrap; gap: 40px;">
+      <div class="bloque-container">
         <div id="panel"></div>
         <div class="controlador">
           <div class="control-grid">
@@ -202,4 +207,5 @@
   </script>
 </body>
 </html>
+
 
